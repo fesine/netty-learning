@@ -31,7 +31,10 @@ public class TimeClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    socketChannel.pipeline().addLast(new TimeClientHandler());
+                    socketChannel.pipeline()
+                            //保证读取的字节长度为4
+                            .addLast(new TimeDecoder(),new TimeClientHandler());
+                            //.addLast(new TimeClientHandler());
                 }
             });
             //启动客户端
