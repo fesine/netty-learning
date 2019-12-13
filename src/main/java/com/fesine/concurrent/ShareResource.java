@@ -18,20 +18,20 @@ public class ShareResource {
      * @param name
      * @param gender
      */
-    public void push(String name,String gender){
+    synchronized public void push(String name,String gender){
+        this.name=name;
         try {
             Thread.sleep(10L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        this.name=name;
         this.gender=gender;
     }
 
     /**
      * 模拟消费者从共享资源中取出数据
      */
-    public void popup(){
+    synchronized public void popup(){
         try {
             Thread.sleep(10L);
         } catch (InterruptedException e) {
