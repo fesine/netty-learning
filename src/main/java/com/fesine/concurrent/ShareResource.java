@@ -19,6 +19,11 @@ public class ShareResource {
      * @param gender
      */
     public void push(String name,String gender){
+        try {
+            Thread.sleep(10L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         this.name=name;
         this.gender=gender;
     }
@@ -27,6 +32,11 @@ public class ShareResource {
      * 模拟消费者从共享资源中取出数据
      */
     public void popup(){
+        try {
+            Thread.sleep(10L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(this.name+"-"+this.gender);
     }
 }
