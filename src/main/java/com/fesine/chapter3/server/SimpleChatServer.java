@@ -47,6 +47,15 @@ public class SimpleChatServer {
     }
 
     public static void main(String[] args) throws Exception {
-        new SimpleChatServer(8078).run();
+        System.out.println("服务端启动方式：java.net.preferIPv6Address："+System.getProperty("java.net.preferIPv6Address"));
+        System.out.println("服务端启动方式：java.net.preferIPv4Stack："+System.getProperty(
+                "java.net.preferIPv4Stack"));
+        Integer port=8078;
+        //通过传参获取监听端口号
+        if(args != null && args.length > 0){
+            port = Integer.valueOf(args[0]);
+        }
+        System.out.println("监听端口："+port);
+        new SimpleChatServer(port).run();
     }
 }

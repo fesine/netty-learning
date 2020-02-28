@@ -51,6 +51,19 @@ public class SimpleChatClient {
     }
 
     public static void main(String[] args) throws Exception {
-        new SimpleChatClient("localhost",8078).run();
+        System.out.println("客户端启动方式：java.net.preferIPv6Address：" + System.getProperty("java.net.preferIPv6Address"));
+        System.out.println("客户端启动方式：java.net.preferIPv4Stack：" + System.getProperty(
+                "java.net.preferIPv4Stack"));
+        String host="localhost";
+        if (args != null && args.length > 0 && args[0] != null) {
+            host = args[0];
+        }
+        Integer port = 8078;
+        //通过传参获取监听端口号
+        if (args != null && args.length > 1 && args[1] != null ) {
+            port = Integer.valueOf(args[1]);
+        }
+        System.out.println("host："+host+"，port："+port);
+        new SimpleChatClient(host, port).run();
     }
 }
