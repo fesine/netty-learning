@@ -27,7 +27,11 @@ public class HighPerformanceZkLock extends AbstractLock {
 
     public HighPerformanceZkLock() {
         if (!zkClient.exists(PATH)) {
-            zkClient.createPersistent(PATH);
+            try {
+                zkClient.createPersistent(PATH);
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
         }
     }
 
