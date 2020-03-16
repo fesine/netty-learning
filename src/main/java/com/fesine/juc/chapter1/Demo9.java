@@ -48,7 +48,7 @@ public class Demo9 {
      */
     private void threadPoolExecutorTest1() throws InterruptedException {
         ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 5, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>());
+                new LinkedBlockingQueue<>());
         testCommon(executor);
         //预计结果，线程池线程数5，超出的任务进入队列，等待被执行
     }
@@ -65,7 +65,7 @@ public class Demo9 {
      */
     private void threadPoolExecutorTest2() throws InterruptedException {
         ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 5, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(3), (r, executor1) -> System.err.println("任务被拒绝了"));
+                new LinkedBlockingQueue<>(3), (r, executor1) -> System.err.println("任务被拒绝了"));
         testCommon(executor);
     }
 
@@ -80,7 +80,7 @@ public class Demo9 {
         //效果相同
         //ThreadPoolExecutor executor = Executors.newFixedThreadPool(5);
         ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 5, 0, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>());
+                new LinkedBlockingQueue<>());
         testCommon(executor);
         //预计结果，线程池线程数5，超出的任务进入队列，等待被执行
     }
@@ -100,6 +100,26 @@ public class Demo9 {
         testCommon(executor);
         Thread.sleep(20*1000L);
         System.out.println("20秒后，再查看线程池中的线程数量："+executor.getPoolSize());
+    }
+
+
+
+    /**
+     * 线程池信息：核心线程数量0，最大线程数量Integer.MAX_VALUE，存活时间为20秒，无界队列，指定拒绝策略
+     *
+     * @throws InterruptedException
+     *
+     * 预计结果：线程数1，等待70秒之后，线程数为0
+     * 如果使用LinkedBlockingDeque，则只会启动一个工作线程，相当于单线程在执行
+     */
+    private void threadPoolExecutorTest4_1() throws InterruptedException {
+        //效果相同
+        //ThreadPoolExecutor executor = Executors.newCachedThreadPool();
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 20, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>());
+        testCommon(executor);
+        Thread.sleep(70*1000L);
+        System.out.println("70秒后，再查看线程池中的线程数量："+executor.getPoolSize());
     }
 
     /**
@@ -228,6 +248,7 @@ public class Demo9 {
         //new Demo9().threadPoolExecutorTest5();
         //new Demo9().threadPoolExecutorTest6();
         //new Demo9().threadPoolExecutorTest7();
-        new Demo9().threadPoolExecutorTest8();
+        //new Demo9().threadPoolExecutorTest8();
+        new Demo9().threadPoolExecutorTest4_1();
     }
 }

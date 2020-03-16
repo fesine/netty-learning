@@ -1,0 +1,21 @@
+对于同步规则的定义
+1、对于监视器m的解锁与所有后续操作对于m的加锁同步(先解锁再加锁)
+2、对于volatile变量v的写入，与所有其他线程后续对v的读同步
+3、启动线程的操作与线程的第一个操作同步
+4、对于每个属性默认值(0,false,null)与每个线程对其进行的操作同步
+5、线程T1的最后操作与线程T2发现线程T1结束同步（alive，join可以判断线程是否终结）
+6、如果线程T1中断了T2，那么线程T1的中断操作与所有其他线程发现T2被中断了同步
+通过抛出InterruptedException异常，或调用Thread.interrupted或Thread.isInterrupted
+
+Happens-before先行发生原则
+happens-before关系主要用于强调两个有冲突的动作之间的关系，以及定义数据争用的发生时机
+具体原则如下：
+1、某个线程的每个动作都happens-before该线程中该动作后面的动作；
+2、某个管程上的unlock动作happens-before同一个管程上后续的lock动作；
+3、对于某个volatile字段的写操作happens-before每个后续对该volatile字段的读操作；
+4、在某个线程上的start()方法happens-before该启动了的线程中的任意动作；
+5、某个线程上的所有动作happens-before任意其它线程成功从该线程对象上join()返回；
+6、如果有动作a happens-before 动作b，且动作b happens-before 动作c，则a happens-before c；
+
+当程序包含两个没有被happens-before关系排序的冲突访问时，就称存在数据争用
+遵守了这个原则，也就意味着有些代码不能被重排序，有些数据不能被缓存！

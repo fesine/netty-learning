@@ -1,0 +1,4 @@
+final在JMM中的处理
+1、final在该对象的构造函数中设置对象的字段，当线程看到该对象时，将始终看到该对象的final字段的正确构造版本。
+伪代码，f= new FinalDemo();读取到的f.x一定是最新值，x为final字段。
+2、通常static final是不可以修改的字段
