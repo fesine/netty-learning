@@ -1,4 +1,4 @@
-package com.fesine.juc.volatiletest;
+package com.fesine.juc.jmm.volatiletest;
 
 import java.util.concurrent.TimeUnit;
 
