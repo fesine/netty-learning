@@ -1,4 +1,4 @@
-package com.fesine.juc.lock;
+package com.fesine.juc.lock.lock;
 
 import java.util.concurrent.TimeUnit;
 

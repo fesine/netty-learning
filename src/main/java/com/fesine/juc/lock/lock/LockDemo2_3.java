@@ -1,29 +1,36 @@
-package com.fesine.juc.lock;
+package com.fesine.juc.lock.lock;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @description: 使用两个线程实现对变量i的自增操作
+ * @description: 使用两个线程实现对变量i的自增操作，
  * @author: fesine
  * @createTime:2020/3/18
  * @update:修改内容
  * @author: fesine
  * @updateTime:2020/3/18
  */
-public class LockDemo1_1 {
-    /**
-     * 比较消耗性能方法是直接加锁synchronized
-     */
-    private  int i;
+public class LockDemo2_3 {
+    int i;
 
+    Lock lock = new ReentrantLock();
+
+    /**
+     * 使用重入锁实现
+     */
     public  void add(){
-        synchronized (this){
+        lock.lock();
+        try {
             i++;
+        } finally {
+            lock.unlock();
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        LockDemo1_1 demo = new LockDemo1_1();
+        LockDemo2_3 demo = new LockDemo2_3();
         for (int i = 0; i < 2; i++) {
             new Thread(()->{
                 for (int j = 0; j < 10000; j++) {
