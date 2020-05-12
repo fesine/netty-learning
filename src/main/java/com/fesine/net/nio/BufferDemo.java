@@ -13,7 +13,9 @@ import java.nio.ByteBuffer;
 public class BufferDemo {
     public static void main(String[] args) {
         //开辟一个4字节大小的缓冲空间
-        ByteBuffer buffer = ByteBuffer.allocate(4);
+        //ByteBuffer buffer = ByteBuffer.allocate(4);
+        //使用堆外内存空间
+        ByteBuffer buffer = ByteBuffer.allocateDirect(4);
         //默认写入模式，三个重要指标
         System.out.println(String.format("初始化：capacity容量：%s.position位置：%s.limit限制：%s",
                 buffer.capacity(), buffer.position(), buffer.limit()));
