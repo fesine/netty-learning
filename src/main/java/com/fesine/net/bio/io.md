@@ -22,7 +22,14 @@
 
 ![image-20200512200858737](/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512200858737.png)
 
-<img src="/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512201206346.png" alt="image-20200512201206346" style="zoom:50%;" />
+<img src="/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512201206346.png" alt="image-20200512201206346" />
 
-<img src="/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512201405409.png" alt="image-20200512201405409" style="zoom:50%;" />
+<img src="/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512201405409.png" alt="image-20200512201405409"  />
 
+<img src="/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512225329930.png" alt="image-20200512225329930"  />
+
+![image-20200512225432634](/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512225432634.png)
+
+![image-20200512234639868](/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512234639868.png)
+
+![image-20200512234819090](/Users/fesine/Documents/workspace/DEV-ENV/intellij-workspace/netty-learning/images/image-20200512234819090.png)
