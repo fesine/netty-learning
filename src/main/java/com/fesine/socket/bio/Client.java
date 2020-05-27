@@ -15,6 +15,8 @@ public class Client {
     private static final String DEFAULT_HOST = "127.0.0.1";
     private static final Integer DEFAULT_PORT = 8011;
 
+    private static final String QUIT="quit";
+
     public static void main(String[] args) {
         Socket socket = null;
         try {
@@ -29,14 +31,17 @@ public class Client {
             //创建输出流，用于向服务端发送消息
             BufferedWriter writer =
                     new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            String msg;
-            if ((msg = reader.readLine()) != null) {
-                writer.write(msg+"\n");
+            BufferedReader respReader =
+                    new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            while (true) {
+                String msg = reader.readLine();
+                writer.write(msg + "\n");
                 writer.flush();
-            }
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            if ((msg = reader.readLine()) != null) {
-                System.out.println(msg);
+                String respMsg = respReader.readLine();
+                System.out.println(respMsg);
+                if (QUIT.equals(msg)) {
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

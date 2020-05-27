@@ -26,18 +26,34 @@ public class Server {
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("客户端[" + socket.getPort() + "],连接成功！");
-                //获取输入流，使用装饰者模式
-                BufferedReader reader =
-                        new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                //创建输出流，用于向客户端响应消息
-                BufferedWriter writer =
-                        new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                String msg;
-                if ((msg = reader.readLine()) != null) {
-                    System.out.println("收到客户端[" + socket.getPort() + "]消息：" + msg);
-                    writer.write("[服务端]"+msg+"\n");
-                    writer.flush();
-                }
+                new Thread(()->{
+
+                    try {
+                    //获取输入流，使用装饰者模式
+                    BufferedReader reader =
+                            new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    //创建输出流，用于向客户端响应消息
+                    BufferedWriter writer =
+                            new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    String msg;
+                    while ((msg = reader.readLine()) != null) {
+                        System.out.println("客户端[" + socket.getPort() + "]：" + msg);
+                        writer.write("[服务端]" + msg + "\n");
+                        writer.flush();
+                    }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }finally {
+                        if(socket != null){
+                            try {
+                                System.out.println("客户端[" + socket.getPort() + "],连接断开！");
+                                socket.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
