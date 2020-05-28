@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @description: 类描述
@@ -30,9 +32,12 @@ public class ChatServer {
      */
     private Map<Integer, Writer> connectedClients;
 
+    private ExecutorService executorService;
+
 
     public ChatServer() {
         connectedClients = new HashMap<>();
+        executorService = Executors.newFixedThreadPool(10);
     }
 
     /**
@@ -111,7 +116,8 @@ public class ChatServer {
                 //等待客户端连接，此方法阻塞
                 Socket socket = serverSocket.accept();
                 //创建chatHandler线程
-                new Thread(new ChatHandler(this,socket)).start();
+                //new Thread(new ChatHandler(this,socket)).start();
+                executorService.submit(new ChatHandler(this, socket));
             }
         } catch (IOException e) {
             e.printStackTrace();
