@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -58,6 +59,20 @@ public class ChatClient {
      * @throws IOException
      */
     public void send(String msg) throws IOException {
+        if (msg.isEmpty()) {
+            return;
+        }
+        wBuffer.clear();
+        wBuffer.put(charset.encode(msg));
+        //转成读模式
+        wBuffer.flip();
+        while (wBuffer.hasRemaining()) {
+            client.write(wBuffer);
+        }
+        if (QUIT.equals(msg)) {
+            close(selector);
+        }
+
     }
 
     /**
@@ -66,8 +81,12 @@ public class ChatClient {
      * @throws IOException
      */
     private String receive(SocketChannel client) throws IOException {
-        String msg = null;
-        return msg;
+        rBuffer.clear();
+        while (client.read(rBuffer) > 0) {
+        }
+        //转成读模式
+        rBuffer.flip();
+        return String.valueOf(charset.decode(rBuffer));
     }
 
     /**
@@ -95,6 +114,7 @@ public class ChatClient {
         try {
             client = SocketChannel.open();
             client.configureBlocking(false);
+            selector = Selector.open();
             client.connect(new InetSocketAddress(host, port));
             client.register(selector, SelectionKey.OP_CONNECT);
             System.out.println("客户端启动，端口：" + port + "...");
@@ -110,6 +130,8 @@ public class ChatClient {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClosedSelectorException e) {
+
         } finally {
             close(selector);
         }

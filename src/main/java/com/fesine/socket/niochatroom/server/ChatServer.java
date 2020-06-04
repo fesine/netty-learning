@@ -86,12 +86,14 @@ public class ChatServer {
             //处理read事件
             SocketChannel client = (SocketChannel) selectedKey.channel();
             String fwdMsg = receive(client);
+
             if (fwdMsg.isEmpty()) {
                 //取消监听
                 selectedKey.cancel();
                 //selector唤醒
                 selector.wakeup();
             }else{
+                System.out.println(getClientName(client) + ":"+fwdMsg);
                 forwardMessage(client, fwdMsg);
                 //判断是否是退出
                 if (readyToQuit(fwdMsg)) {
@@ -142,8 +144,9 @@ public class ChatServer {
      */
     private String receive(SocketChannel client) throws IOException {
         rBuffer.clear();
-        while (client.read(rBuffer) > 0) {
-        }
+        while (client.read(rBuffer) > 0){}
+        //转成读模式
+        rBuffer.flip();
         return String.valueOf(charset.decode(rBuffer));
     }
 
